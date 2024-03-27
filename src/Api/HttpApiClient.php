@@ -23,8 +23,7 @@ final class HttpApiClient implements ApiClient
         private readonly string $apiKey,
         private readonly ClientInterface $client,
         private readonly RequestFactoryInterface $requestFactory,
-    ) {
-    }
+    ) {}
 
     /**
      * @param non-empty-string $accountName
@@ -84,7 +83,7 @@ final class HttpApiClient implements ApiClient
         $body = null;
 
         if (null !== $data) {
-            $body = JSON::encode($data);
+            $body = Json::encode($data);
             \assert('' !== $body);
 
             $headers['Content-Type'] = 'application/json';
@@ -116,7 +115,7 @@ final class HttpApiClient implements ApiClient
         $url = "https://{$this->apiHost}/{$endpoint}.json";
 
         if (!empty($params)) {
-            $url .= '?'.http_build_query($params, '', '&', \PHP_QUERY_RFC3986);
+            $url .= '?' . http_build_query($params, '', '&', \PHP_QUERY_RFC3986);
         }
 
         return $url;

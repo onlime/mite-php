@@ -2,18 +2,23 @@
 
 declare(strict_types=1);
 
-use Beste\PhpCsFixer\Config\Factory;
-use Beste\PhpCsFixer\Config\RuleSet\Php81;
+$finder = PhpCsFixer\Finder::create()->in(__DIR__);
 
-$config = Factory::fromRuleSet(new Php81());
-
-$config
-    ->getFinder()
-    ->in([
-        'src',
-        'tests',
+return (new PhpCsFixer\Config())
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@PER-CS2.0' => true,
+        'final_class' => true,
+        'no_unused_imports' => true,
+        'ordered_imports' => [
+            'imports_order' => [
+                'class',
+                'function',
+                'const',
+            ],
+            'sort_algorithm' => 'alpha',
+        ],
+        'php_unit_internal_class' => true,
+        'php_unit_test_class_requires_covers' => true,
     ])
-    ->ignoreDotFiles(false)
-;
-
-return $config;
+    ->setFinder($finder);

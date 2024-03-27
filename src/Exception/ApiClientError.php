@@ -47,7 +47,7 @@ final class ApiClientError extends \RuntimeException implements MiteException
         $code = $response->getStatusCode();
 
         try {
-            $data = JSON::decode((string) $response->getBody(), true);
+            $data = Json::decode((string) $response->getBody(), true);
         } catch (\Throwable $e) {
             $data = [];
         }

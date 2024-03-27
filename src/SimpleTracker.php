@@ -11,8 +11,7 @@ final class SimpleTracker
 {
     private function __construct(
         private readonly ApiClient $client,
-    ) {
-    }
+    ) {}
 
     public static function withApiClient(ApiClient $apiClient): self
     {
@@ -25,7 +24,7 @@ final class SimpleTracker
     public function status(): array
     {
         $response = $this->client->get('tracker');
-        $data = JSON::decode((string) $response->getBody(), true);
+        $data = Json::decode((string) $response->getBody(), true);
 
         return current($data);
     }
@@ -38,7 +37,7 @@ final class SimpleTracker
     public function start(int|string $id): array
     {
         $response = $this->client->patch("tracker/{$id}");
-        $data = JSON::decode((string) $response->getBody(), true);
+        $data = Json::decode((string) $response->getBody(), true);
 
         return current($data);
     }
@@ -51,7 +50,7 @@ final class SimpleTracker
     public function stop(int|string $id): array
     {
         $response = $this->client->delete("tracker/{$id}");
-        $data = JSON::decode((string) $response->getBody(), true);
+        $data = Json::decode((string) $response->getBody(), true);
 
         return current($data);
     }

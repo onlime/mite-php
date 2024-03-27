@@ -21,8 +21,7 @@ final class AppendCallerHeaderPlugin implements Plugin
     public function __construct(
         private readonly string $header,
         private readonly string $namespace,
-    ) {
-    }
+    ) {}
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
@@ -35,7 +34,7 @@ final class AppendCallerHeaderPlugin implements Plugin
             $function = $item['function'];
 
             if (str_contains($class, $this->namespace)) {
-                $method = $class.'::'.$function;
+                $method = $class . '::' . $function;
 
                 break;
             }

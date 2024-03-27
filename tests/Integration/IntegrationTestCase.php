@@ -48,7 +48,7 @@ abstract class IntegrationTestCase extends TestCase
         self::$apiClient = self::createVCRApiClient(
             $accountName,
             $apiKey,
-            __DIR__.'/../fixtures/vcr',
+            __DIR__ . '/../fixtures/vcr',
             $throwIfNotAbleToReplay,
         );
     }
@@ -137,6 +137,6 @@ abstract class IntegrationTestCase extends TestCase
             $actual,
         );
 
-        $this->assertIsList($actual['hourly_rates_per_service']);
+        self::assertIsList($actual['hourly_rates_per_service']);
     }
 }

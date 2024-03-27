@@ -11,8 +11,7 @@ final class SimpleApi
 {
     private function __construct(
         private readonly ApiClient $client,
-    ) {
-    }
+    ) {}
 
     public static function withApiClient(ApiClient $apiClient): self
     {
@@ -73,7 +72,7 @@ final class SimpleApi
     public function createCustomer(array $data): array
     {
         $response = $this->client->post('customers', ['customer' => $data]);
-        $data = JSON::decode((string) $response->getBody(), true);
+        $data = Json::decode((string) $response->getBody(), true);
 
         return current($data);
     }
@@ -137,7 +136,7 @@ final class SimpleApi
     public function createProject(array $data): array
     {
         $response = $this->client->post('projects', ['project' => $data]);
-        $data = JSON::decode((string) $response->getBody(), true);
+        $data = Json::decode((string) $response->getBody(), true);
 
         return current($data);
     }
@@ -201,7 +200,7 @@ final class SimpleApi
     public function createService(array $data): array
     {
         $response = $this->client->post('services', ['service' => $data]);
-        $data = JSON::decode((string) $response->getBody(), true);
+        $data = Json::decode((string) $response->getBody(), true);
 
         return current($data);
     }
@@ -272,7 +271,7 @@ final class SimpleApi
     public function createTimeEntry(array $data): array
     {
         $response = $this->client->post('time_entries', ['time_entry' => $data]);
-        $data = JSON::decode((string) $response->getBody(), true);
+        $data = Json::decode((string) $response->getBody(), true);
 
         return current($data);
     }
@@ -328,7 +327,7 @@ final class SimpleApi
     {
         $response = $this->client->get($endpoint, $params);
 
-        $data = JSON::decode((string) $response->getBody(), true);
+        $data = Json::decode((string) $response->getBody(), true);
 
         return array_column($data, $column);
     }
@@ -343,7 +342,7 @@ final class SimpleApi
         $response = $this->client->get($endpoint);
 
         /** @var array<non-empty-string|mixed> $data */
-        $data = JSON::decode((string) $response->getBody(), true);
+        $data = Json::decode((string) $response->getBody(), true);
 
         /** @var array<non-empty-string|mixed> $data */
         return current($data);
