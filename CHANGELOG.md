@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.2.0 - 2024-03-27
+
 * Added support for PHP 8.3
 
 ## 3.1.0 - 2023-06-08
