@@ -8,7 +8,7 @@ parameters:
 
 	ignoreErrors:
 		-
-			message: '#Parameter.+\$apiKey of.+IntegrationTestCase::createVCRApiClient\(\) expects non-empty-string#'
+			message: '#Parameter.+\$apiKey of.+VCRApiClientFactory.+expects non-empty-string#'
 			path: tests/Integration/IntegrationTestCase.php
 
 includes:

@@ -38,31 +38,12 @@ Users with the `admin` role can see and do (almost) everything.
 ## Installation
 
 In order to use this library, you need a [PSR-18 HTTP Client](https://packagist.org/providers/psr/http-client-implementation), and a
-[PSR-17 HTTP Message Factory](https://packagist.org/providers/psr/http-factory-implementation).
-
-### Example using `kriswallsmith/buzz` and `nyholm/psr7`
-
-```bash
-composer require kriswallsmith/buzz nyholm/psr7 gamez/mite
-```
-
-```php
-$requestFactory = new \Nyholm\Psr7\Factory\Psr17Factory();
-$httpClient = new \Buzz\Client\FileGetContents($requestFactory);
-```
-
-### Example using `guzzlehttp/guzzle` and `laminas/laminas-diactoros`
+[PSR-17 HTTP Message Factory](https://packagist.org/providers/psr/http-factory-implementation). If you don't already have them available in your project,
+they will be added to your project's dependencies
 
 ```bash
-composer require guzzlehttp/guzzle laminas/laminas-diactoros gamez/mite
+composer require gamez/mite
 ```
-
-```php
-$requestFactory = new \Laminas\Diactoros\RequestFactory();
-$httpClient = new \GuzzleHttp\Client();
-```
-
----
 
 ## Usage
 
@@ -72,16 +53,13 @@ Once you have created an HTTP Client and Request Factory as described in the ins
 you can create an API client with them:
 
 ```php
-use Gamez\Mite\Api\HttpApiClient;
+<?php
 
-$accountName = 'xxx';
-$apiKey = 'xxx';
+use Gamez\Mite\Api\HttpApiClientFactory;
 
-/**
- * @var \Psr\Http\Message\RequestFactoryInterface $requestFactory
- * @var \Psr\Http\Client\ClientInterface $httpClient
- */
-$apiClient = HttpApiClient::with($accountName, $apiKey, $httpClient, $requestFactory);
+$apiClientFactory = new HttpApiClientFactory();
+
+$apiClient = $apiClientFactory('my_account', 'api_key');
 ```
 
 This API client allows you to make authenticated HTTP requests to the API of your mite account - 

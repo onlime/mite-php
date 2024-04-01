@@ -5,18 +5,9 @@ declare(strict_types=1);
 namespace Gamez\Mite\Tests\Integration;
 
 use Gamez\Mite\Api\ApiClient;
-use Gamez\Mite\Api\HttpApiClient;
-use Gamez\Mite\Tests\Support\AppendCallerHeaderPlugin;
-use Http\Client\Common\PluginClient;
-use Http\Client\Plugin\Vcr\NamingStrategy\PathNamingStrategy;
-use Http\Client\Plugin\Vcr\Recorder\FilesystemRecorder;
-use Http\Client\Plugin\Vcr\RecordPlugin;
-use Http\Client\Plugin\Vcr\ReplayPlugin;
-use Http\Discovery\Psr17FactoryDiscovery;
-use Http\Discovery\Psr18ClientDiscovery;
+use Gamez\Mite\Tests\Support\VCRApiClientFactory;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Client\ClientInterface;
 
 /**
  * @internal
@@ -37,54 +28,17 @@ abstract class IntegrationTestCase extends TestCase
         $accountName = trim($_ENV['MITE_ACCOUNT'] ?? 'beste');
         $apiKey = trim($_ENV['MITE_API_KEY'] ?? '');
 
-        if ('' === $accountName) {
+        if ($accountName === '') {
             self::markTestSkipped('Account name not provided');
         }
 
         self::$accountName = $accountName;
 
-        $throwIfNotAbleToReplay = '' === $apiKey;
+        $throwIfNotAbleToReplay = $apiKey === '';
 
-        self::$apiClient = self::createVCRApiClient(
-            $accountName,
-            $apiKey,
-            __DIR__ . '/../fixtures/vcr',
-            $throwIfNotAbleToReplay,
-        );
-    }
+        $apiClientFactory = new VCRApiClientFactory(__DIR__ . '/../fixtures/vcr', $throwIfNotAbleToReplay);
 
-    /**
-     * @param non-empty-string $accountName
-     * @param non-empty-string $apiKey
-     * @param non-empty-string $filePath
-     */
-    protected static function createVCRApiClient(string $accountName, string $apiKey, string $filePath, bool $throwIfNotAbleToReplay): ApiClient
-    {
-        return HttpApiClient::with(
-            $accountName,
-            $apiKey,
-            self::createVCRClient($filePath, $throwIfNotAbleToReplay),
-            Psr17FactoryDiscovery::findRequestFactory(),
-        );
-    }
-
-    /**
-     * @param non-empty-string $filePath
-     */
-    protected static function createVCRClient(string $filePath, bool $throwIfNotAbleToReplay): ClientInterface
-    {
-        $namingStrategy = new PathNamingStrategy([
-            'hash_headers' => ['X-Beste-Caller'],
-        ]);
-        $recorder = new FilesystemRecorder($filePath);
-        $appendHeader = new AppendCallerHeaderPlugin('X-Beste-Caller', 'Gamez\Mite\Tests\Integration');
-        $record = new RecordPlugin($namingStrategy, $recorder);
-        $replay = new ReplayPlugin($namingStrategy, $recorder, $throwIfNotAbleToReplay);
-
-        return new PluginClient(
-            Psr18ClientDiscovery::find(),
-            [$appendHeader, $replay, $record],
-        );
+        self::$apiClient = $apiClientFactory($accountName, $apiKey);
     }
 
     /**

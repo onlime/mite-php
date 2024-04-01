@@ -25,6 +25,7 @@ final class AppendCallerHeaderPlugin implements Plugin
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
+        /** @noinspection DebugFunctionUsageInspection */
         $backtrace = debug_backtrace();
 
         $method = '';
@@ -40,7 +41,7 @@ final class AppendCallerHeaderPlugin implements Plugin
             }
         }
 
-        if ('' === $method) {
+        if ($method === '') {
             return $next($request);
         }
 
