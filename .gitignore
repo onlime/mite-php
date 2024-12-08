@@ -2,8 +2,7 @@
 /vendor
 
 .env
-/.php-cs-fixer.php
-/.php-cs-fixer.cache
+/.pint.cache.json
 /.phpunit.result.cache
 /composer.lock
 /phpstan.neon
