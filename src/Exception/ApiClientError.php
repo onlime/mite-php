@@ -11,6 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 final class ApiClientError extends \RuntimeException implements MiteException
 {
     private RequestInterface $request;
+
     private ?ResponseInterface $response;
 
     public function __construct(

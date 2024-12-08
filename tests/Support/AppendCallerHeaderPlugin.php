@@ -35,7 +35,7 @@ final class AppendCallerHeaderPlugin implements Plugin
             $function = $item['function'];
 
             if (str_contains($class, $this->namespace)) {
-                $method = $class . '::' . $function;
+                $method = $class.'::'.$function;
 
                 break;
             }
@@ -48,7 +48,7 @@ final class AppendCallerHeaderPlugin implements Plugin
         $request = $request->withAddedHeader($this->header, $method);
 
         return $next($request)->then(function (ResponseInterface $response) use ($method) {
-            if (!$response->hasHeader($this->header)) {
+            if (! $response->hasHeader($this->header)) {
                 $response = $response->withAddedHeader($this->header, $method);
             }
 

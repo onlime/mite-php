@@ -13,6 +13,7 @@ use SensitiveParameter;
 final class HttpApiClientFactory implements ApiClientFactory
 {
     private RequestFactoryInterface $requestFactory;
+
     private ClientInterface $httpClient;
 
     public function __construct(

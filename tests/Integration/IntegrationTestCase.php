@@ -36,7 +36,7 @@ abstract class IntegrationTestCase extends TestCase
 
         $throwIfNotAbleToReplay = $apiKey === '';
 
-        $apiClientFactory = new VCRApiClientFactory(__DIR__ . '/../fixtures/vcr', $throwIfNotAbleToReplay);
+        $apiClientFactory = new VCRApiClientFactory(__DIR__.'/../fixtures/vcr', $throwIfNotAbleToReplay);
 
         self::$apiClient = $apiClientFactory($accountName, $apiKey);
     }
